@@ -1,0 +1,14 @@
+<div class="work-list-container">
+
+  <div *ngIf="!error && !loading" class="work-list">
+    <div class="work-card" *ngFor="let work of works">
+      <h3>{{ work.title }}</h3>
+      <img [src]="work.image" alt="Image of {{ work.title }}" />
+      <p>{{ work.description }}</p>
+      <a [href]="work.customerWebsite" target="_blank">Visit Customer Website</a>
+    </div>
+  </div>
+  <div *ngIf="loading" class="spinner"></div>
+  <h1 *ngIf="error">{{ errorMessage }}</h1>
+  
+</div>
