@@ -1,0 +1,166 @@
+.app-container {
+  margin: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.flex {
+  display: flex;
+}
+nav {
+  justify-content: space-between;
+  align-items: center;
+}
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.nav-link h3 {
+  margin: 0;
+}
+
+.nav-link:hover {
+  color: #f39200;
+}
+
+.desktop-navlinks {
+  display: none;
+}
+#menuToggle {
+  display: block;
+
+  position: relative;
+  top: 10px;
+
+  right: 10px;
+  z-index: 1;
+
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 9999;
+}
+
+#menuToggle li {
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0.125rem;
+  transition: color 0.3s ease;
+  color: #000;
+}
+#menuToggle li:hover {
+  color: #f39200;
+}
+
+#menuToggle input {
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+
+  cursor: pointer;
+
+  opacity: 0;
+  z-index: 2;
+
+  -webkit-touch-callout: none;
+}
+
+#menuToggle span {
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+
+  background: #cdcdcd;
+  border-radius: 3px;
+
+  z-index: 1;
+
+  transform-origin: 4px 0px;
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+    background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+}
+
+#menuToggle span:first-child {
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+  transform-origin: 0% 100%;
+}
+#dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+
+#menuToggle input:checked ~ span {
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #fff;
+}
+
+
+#menuToggle input:checked ~ span:nth-last-child(3) {
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+#menuToggle input:checked ~ span:nth-last-child(2) {
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+
+#menu {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 300px;
+  margin: 0;
+  padding: 3.125rem;
+  padding: 0;
+  top: 2.188rem;
+  height: 20vh;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  background-color: #fff;
+  text-align: center;
+  transform-origin: 100% 0%;
+  transform: translate(-80%, -180%);
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+}
+
+#menu li {
+  margin: 1rem 0;
+}
+
+
+#menuToggle input:checked ~ .open {
+  transform: translate(-80%, 0%);
+}
+@media (min-width: 1024px) {
+  .desktop-navlinks {
+    display: flex;
+  }
+    #menuToggle {
+        display: none;
+    }
+}
