@@ -1,0 +1,152 @@
+<!-- =============================================TABS====================================== -->
+<div class="tab-container">
+  <div
+    class="tab"
+    *ngFor="let tab of tabs; let i = index"
+    (click)="selectTab(i)"
+    [ngClass]="{ active: activeTab === i }"
+  >
+    <h3>{{ tab }}</h3>
+  </div>
+</div>
+<!-- ===============================================SPINNER========================================== -->
+<div *ngIf="loading" style="position: absolute; top: 50%; left: 50%">
+  <div class="spinner"></div>
+</div>
+
+<!-- ===============================================LIST OF WORKS WITH ACTION BUTTONS======================== -->
+<div class="work-list-container" *ngIf="activeTab === 0">
+  <div class="work-list">
+    <div class="work-card" *ngFor="let work of allWorks">
+      <img [src]="work.image" alt="Image" />
+      <h3>{{ work.title }}</h3>
+      <p>{{ work.description }}</p>
+      <div class="actions">
+        <button class="edit" (click)="openEditDialog(work)">Edit</button>
+        <button class="toggle" (click)="toggleVisibility(work)">
+          Toggle visibility: {{ work.visible }}
+        </button>
+        <button class="delete" (click)="deleteWork(work)">Delete</button>
+      </div>
+    </div>
+  </div>
+  <!-- ====================================================EDIT DIALOG WITH DIALOG OVERLAY (To prevent clicking on something else) -->
+  <div id="dialog-overlay" *ngIf="dialogOpen" (click)="closeEditDialog()"></div>
+  <div class="edit-dialog" *ngIf="dialogOpen && action === 'edit'">
+    <form [formGroup]="workFormGroup">
+      <h2>{{ action | uppercase }}</h2>
+      <label for="title">Title</label>
+      <input
+        type="text"
+        required
+        formControlName="title"
+        name="title"
+        id="title"
+        placeholder="Awesome title..."
+      />
+      <div
+        *ngIf="title.invalid && (title.dirty || title.touched)"
+        class="alert alert-danger"
+      >
+        <div *ngIf="title.errors['required']">Title is required</div>
+      </div>
+      <label for="description">Description</label>
+      <textarea
+        name="description"
+        id="description"
+        cols="30"
+        rows="10"
+        formControlName="description"
+        placeholder="Awesome description..."
+      ></textarea>
+
+      <label for="customerWebsite">Customer Website</label>
+      <input
+        type="text"
+        required
+        formControlName="customerWebsite"
+        name="customerWebsite"
+        id="customerWebsite"
+        placeholder="Awesome customer website..."
+      />
+      <div
+        *ngIf="
+          customerWebsite.invalid &&
+          (customerWebsite.dirty || customerWebsite.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="customerWebsite.errors['required']">
+          Customer Website is required
+        </div>
+        <div *ngIf="customerWebsite.errors['pattern']">
+          Customer Website must be a valid URL
+        </div>
+      </div>
+    </form>
+    <button class="edit" (click)="saveUpdatedWork()" [disabled]="!workFormGroup.valid">
+      Save
+    </button>
+  </div>
+</div>
+
+<!-- ===============================================ADD WORK================================== -->
+
+<div class="add-work-container" *ngIf="activeTab === 1">
+    <h2 *ngIf="error" style="color: #ff4f4f;">Something went wrong</h2>
+    <h2 *ngIf="success" style="color: #50c878;">Work added successfully</h2>
+  <form [formGroup]="workFormGroup" *ngIf="!error && !loading">
+    <label for="title">Title</label>
+    <input
+      type="text"
+      required
+      formControlName="title"
+      name="title"
+      id="title"
+      placeholder="Awesome title..."
+    />
+    <div
+      *ngIf="title.invalid && (title.dirty || title.touched)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="title.errors['required']">Title is required</div>
+    </div>
+    <label for="description">Description</label>
+    <textarea
+      name="description"
+      id="description"
+      cols="30"
+      rows="10"
+      formControlName="description"
+      placeholder="Awesome description..."
+    ></textarea>
+    <label for="image">Image</label>
+    <input type="file" name="image" id="image" (change)="onImageSelect($event)" />
+    <label for="customerWebsite">Customer Website</label>
+    <input
+      type="text"
+      required
+      formControlName="customerWebsite"
+      name="customerWebsite"
+      id="customerWebsite"
+      placeholder="Awesome customer website..."
+    />
+    <div
+      *ngIf="
+        customerWebsite.invalid &&
+        (customerWebsite.dirty || customerWebsite.touched)
+      "
+      class="alert alert-danger"
+    >
+      <div *ngIf="customerWebsite.errors['required']">
+        Customer Website is required
+      </div>
+      <div *ngIf="customerWebsite.errors['pattern']">
+        Customer Website must be a valid URL
+      </div>
+    </div>
+    <button class="add" (click)="addWork()" [disabled]="!workFormGroup.valid">
+      Add
+    </button>
+  </form>
+</div>
